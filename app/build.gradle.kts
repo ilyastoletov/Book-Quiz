@@ -61,6 +61,7 @@ dependencies {
     implementation(Dependencies.Compose.uiToolingPreview)
     implementation(Dependencies.Compose.material3)
 
+    implementation(Dependencies.Compose.coil)
     implementation(Dependencies.Compose.navigation)
 
     debugImplementation(Dependencies.Compose.uiTooling)
