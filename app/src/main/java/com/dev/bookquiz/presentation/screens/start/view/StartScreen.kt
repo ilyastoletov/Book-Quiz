@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dev.bookquiz.presentation.theme.Typography
 import com.dev.bookquiz.presentation.ui.background.BackgroundImage
+import com.dev.bookquiz.presentation.ui.button.OrangeButton
 
 @Composable
 fun StartScreen(navController: NavController) {
@@ -27,28 +28,11 @@ fun StartScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        BackgroundImage()
-        StartScreenContent(navController)
-    }
-}
-
-@Composable
-private fun StartScreenContent(navController: NavController) {
-    Text(
-        text = stringResource(id = R.string.start_heading).uppercase(),
-        style = Typography.headlineLarge
-    )
-    Button(
-        modifier = Modifier
-            .width(300.dp)
-            .height(65.dp),
-        shape = RoundedCornerShape(15.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFD4D0A)),
-        onClick = { navController.navigate("game") }
-    ) {
+        BackgroundImage(height = 0.5f)
         Text(
-            text = stringResource(id = R.string.play).uppercase(),
-            style = Typography.titleMedium
+            text = stringResource(id = R.string.start_heading).uppercase(),
+            style = Typography.headlineLarge
         )
+        OrangeButton(text = "play") { navController.navigate("game") }
     }
 }

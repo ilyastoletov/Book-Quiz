@@ -15,10 +15,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun BackgroundImage() {
+fun BackgroundImage(height: Float) {
     Box(modifier = Modifier
         .fillMaxWidth()
-        .fillMaxHeight(0.5f)
+        .fillMaxHeight(height)
     ) {
         Image(
             modifier = Modifier.fillMaxSize(),

@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -26,11 +28,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -52,8 +54,9 @@ dependencies {
 
     implementation(Dependencies.Core.ktx)
     implementation(Dependencies.Core.kotlinBom)
-    implementation(Dependencies.Core.lifecycle)
+    implementation(Dependencies.Core.lifecycleRuntime)
     implementation(Dependencies.Compose.activityCompose)
+    implementation(Dependencies.Compose.lifecycleCompose)
     implementation(Dependencies.Compose.composeBom)
 
     implementation(Dependencies.Compose.ui)
@@ -61,8 +64,12 @@ dependencies {
     implementation(Dependencies.Compose.uiToolingPreview)
     implementation(Dependencies.Compose.material3)
 
-    implementation(Dependencies.Compose.coil)
     implementation(Dependencies.Compose.navigation)
+    implementation(Dependencies.Compose.coil)
+
+    implementation(Dependencies.Hilt.hilt)
+    implementation(Dependencies.Hilt.navigationCompose)
+    kapt(Dependencies.Hilt.kaptCompiler)
 
     debugImplementation(Dependencies.Compose.uiTooling)
     debugImplementation(Dependencies.Compose.testManifest)

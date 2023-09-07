@@ -15,7 +15,9 @@ import com.dev.bookquiz.presentation.screens.game.view.GameScreen
 import com.dev.bookquiz.presentation.screens.results.view.ResultsScreen
 import com.dev.bookquiz.presentation.screens.start.view.StartScreen
 import com.dev.bookquiz.presentation.theme.BookQuizTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
