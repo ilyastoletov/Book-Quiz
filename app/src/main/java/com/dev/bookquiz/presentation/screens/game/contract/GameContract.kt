@@ -16,11 +16,11 @@ object GameContract  {
     sealed class Event : ViewEvent {
         object GetQuestion : Event()
         data class WriteAnswer(val answer: Answer) : Event()
-        // object GameEnded : Event()
+        object GameEnded : Event()
     }
 
     sealed class Effect : ViewEffect {
-        // object LoadFinishScreen : Effect()
+         object LoadFinishScreen : Effect()
     }
 
 }

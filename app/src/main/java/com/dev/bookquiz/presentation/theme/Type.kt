@@ -27,5 +27,12 @@ val Typography = Typography(
         fontWeight = FontWeight(700),
         color = Color(0xFFFFFFFF),
         textAlign = TextAlign.Center,
+    ),
+    titleSmall = TextStyle(
+        fontSize = 16.sp,
+        fontFamily = FontFamily(Font(R.font.roboto_700)),
+        fontWeight = FontWeight(700),
+        color = Color(0xFFFFFFFF),
+        textAlign = TextAlign.Center,
     )
 )

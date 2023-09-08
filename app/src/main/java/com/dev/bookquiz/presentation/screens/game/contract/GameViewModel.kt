@@ -20,6 +20,7 @@ class GameViewModel @Inject constructor(private val getQuestionUseCase: GetQuest
     override fun handleEvents(event: GameContract.Event) = when(event) {
         is GameContract.Event.GetQuestion -> loadQuestion()
         is GameContract.Event.WriteAnswer -> writeAnswer(event.answer)
+        is GameContract.Event.GameEnded -> launchNavigationEffect()
     }
 
     private fun loadQuestion() {
@@ -34,6 +35,12 @@ class GameViewModel @Inject constructor(private val getQuestionUseCase: GetQuest
     private fun writeAnswer(answer: Answer) {
         viewModelScope.launch(dispatcher) {
             writeAnswerUseCase.invoke(answer)
+        }
+    }
+
+    private fun launchNavigationEffect() {
+        setEffect {
+            GameContract.Effect.LoadFinishScreen
         }
     }
 

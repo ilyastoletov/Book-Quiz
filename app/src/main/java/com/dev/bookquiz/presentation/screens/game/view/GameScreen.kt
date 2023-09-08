@@ -20,7 +20,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -39,19 +41,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.dev.bookquiz.presentation.screens.game.contract.GameContract
 import com.dev.bookquiz.presentation.screens.game.contract.GameViewModel
 import com.dev.bookquiz.presentation.ui.background.BackgroundImage
 import com.dev.bookquiz.presentation.ui.button.OrangeButton
+import com.dev.bookquiz.presentation.ui.loading.LoadingText
 import com.dev.domain.model.Answer
 import com.dev.domain.model.Book
 import com.dev.domain.model.Question
+import kotlinx.coroutines.flow.collect
 
 
 // «»
 @Composable
-fun GameScreen(viewModel: GameViewModel = hiltViewModel()) {
+fun GameScreen(navController: NavController, viewModel: GameViewModel = hiltViewModel()) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -63,6 +68,15 @@ fun GameScreen(viewModel: GameViewModel = hiltViewModel()) {
         BackgroundImage(height = 0.3f)
         GameContent(state = state, onEvent= viewModel::handleEvents)
     }
+    
+    LaunchedEffect(key1 = true) {
+        viewModel.effect.collect { effect ->
+            when(effect) {
+                is GameContract.Effect.LoadFinishScreen -> navController.navigate("results")
+            }
+        }
+    }
+
 }
 
 @Composable
@@ -101,15 +115,6 @@ private fun Content(question: Question, onEvent: (GameContract.Event) -> Unit) {
 }
 
 @Composable
-private fun LoadingText() {
-    Text(
-        text = stringResource(id = R.string.loading),
-        fontSize = 18.sp,
-        fontFamily = FontFamily(Font(R.font.roboto_400))
-    )
-}
-
-@Composable
 private fun QuestionContent(
     question: Question,
     questionNumber: MutableState<Int>,
@@ -139,6 +144,19 @@ private fun QuestionContent(
         }
         if (isBookChosen.value) {
             OrangeButton(text = "next") {
+                if (questionNumber.value == 10) {
+                    onEvent(GameContract.Event.WriteAnswer(
+                        Answer(
+                            questionNumber = questionNumber.value,
+                            quote = question.quote,
+                            bookImage = question.books.find { book -> book.isCorrect }!!.imageUrl,
+                            correct = chosenBook.value?.isCorrect ?: false
+                        )
+                    )
+                    )
+                    onEvent(GameContract.Event.GameEnded)
+                    return@OrangeButton
+                }
                 isBookChosen.value = false
                 questionNumber.value += 1
                 onEvent(GameContract.Event.WriteAnswer(

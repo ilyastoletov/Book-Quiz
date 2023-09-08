@@ -1,6 +1,7 @@
 package com.dev.bookquiz.presentation.di
 
 import com.dev.domain.repository.QuestionRepository
+import com.dev.domain.usecase.GetFinishAnswersUseCase
 import com.dev.domain.usecase.GetQuestionUseCase
 import com.dev.domain.usecase.WriteAnswerUseCase
 import dagger.Module
@@ -20,6 +21,11 @@ class DomainModule {
     @Provides
     fun provideWriteAnswerUseCase(questionRepository: QuestionRepository): WriteAnswerUseCase {
         return WriteAnswerUseCase(questionRepository)
+    }
+
+    @Provides
+    fun provideGetFinishAnswersUseCase(questionRepository: QuestionRepository): GetFinishAnswersUseCase {
+        return GetFinishAnswersUseCase(questionRepository)
     }
 
 }

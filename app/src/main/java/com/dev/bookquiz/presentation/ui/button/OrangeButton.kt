@@ -15,11 +15,12 @@ import com.dev.bookquiz.R
 import com.dev.bookquiz.presentation.theme.Typography
 
 @Composable
-fun OrangeButton(text: String, onClick: () -> Unit) {
+fun OrangeButton(
+    text: String,
+    onClick: () -> Unit
+) {
     Button(
-        modifier = Modifier
-            .width(300.dp)
-            .height(65.dp),
+        modifier = Modifier.width(300.dp).height(65.dp),
         shape = RoundedCornerShape(15.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFD4D0A)),
         onClick = { onClick() }

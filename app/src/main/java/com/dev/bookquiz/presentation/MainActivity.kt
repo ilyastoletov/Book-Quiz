@@ -40,7 +40,7 @@ fun NavigationHost() {
 
     NavHost(navController = navController, startDestination = "startScreen") {
         composable("startScreen") { StartScreen(navController) }
-        composable("game") { GameScreen() }
-        composable("results") { ResultsScreen() }
+        composable("game") { GameScreen(navController) }
+        composable("results") { ResultsScreen(navController) }
     }
 }
